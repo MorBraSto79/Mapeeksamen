@@ -166,12 +166,10 @@ public class EksamenSBinTre<T> {
         if (p.venstre != null){
             førstePostorden(p.venstre);
             return p.venstre;
-        }
-        else if (p.høyre != null){
+        } else if (p.høyre != null){
             førstePostorden(p.høyre);
             return p.høyre;
-        }
-        else {
+        } else {
             return p;
         }
 
@@ -194,6 +192,11 @@ public class EksamenSBinTre<T> {
     }
 
     public void postorden(Oppgave<? super T> oppgave) {
+
+        if ( != null){
+            postorden(verdi, oppgave);
+        }
+
         throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
