@@ -162,6 +162,14 @@ public class EksamenSBinTre<T> {
     }
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
+
+        if (p.venstre != null){
+            førstePostorden(p.venstre);
+        }
+        if (p.høyre != null){
+            førstePostorden(p.høyre);
+        }
+
         throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
