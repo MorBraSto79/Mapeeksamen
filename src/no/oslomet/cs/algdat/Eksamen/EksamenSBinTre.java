@@ -177,7 +177,23 @@ public class EksamenSBinTre<T> {
     }
 
     public int fjernAlle(T verdi) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+       /* if (tom()){
+            return 0;
+        }
+
+        int fjernet = 0;
+        boolean removed = false;
+        while (removed != true){
+            if(fjern(verdi)){
+                fjernet++;
+            } else {
+                removed = true;
+            }
+        }
+        return fjernet;
+
+        */throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public int antall(T verdi) {
