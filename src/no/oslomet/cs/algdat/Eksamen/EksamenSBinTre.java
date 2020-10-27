@@ -123,8 +123,57 @@ public class EksamenSBinTre<T> {
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
-    public boolean fjern(T verdi) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+    public boolean fjern(T verdi) {     // importert fra kompendiet (5.2.8 d) og tilpasset denne oppgaven
+
+        if (verdi == null){
+            return false;
+        }
+
+        Node<T> p = rot, forelder = null;
+
+        while (p != null){
+            int cmp = comp.compare(verdi,p.verdi);
+            if (cmp < 0){
+                forelder = p;
+                p = p.venstre;
+            } else if (cmp > 0){
+                forelder = p;
+                p = p.høyre;
+            } else {
+                break;
+            }
+
+            if (p == null){
+                return false;
+            }
+
+            if (p.venstre == null || p.høyre == null){
+                Node<T> barn = p.venstre != null ? p.venstre : p.høyre;
+                if (p == rot){
+                    rot = barn;
+                } else if (p == forelder.venstre){
+                    forelder.venstre = barn;
+                } else {
+                    forelder.høyre = barn;
+                }
+            } else {
+                Node<T> s = p, r = p.høyre;
+                while (r.venstre != null){
+                    s = r;
+                    r = r.venstre;
+                }
+                p.verdi = r.verdi;
+                if (s != p){
+                    s.venstre = r.høyre;
+                } else {
+                    s.høyre = r.høyre;
+                }
+            }
+        }
+        antall--;
+        return true;
+
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public int fjernAlle(T verdi) {
@@ -178,23 +227,23 @@ public class EksamenSBinTre<T> {
     }
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
+
         if (p.venstre != null){
-            nestePostorden(p.høyre);
-            return p.høyre;
-        } else if (p.høyre != null){
-            nestePostorden(p.høyre);
-            return p.høyre;
+            p = p.høyre;
+            while (p.venstre != null){
+                p = p.venstre;
+            }
         } else {
             return p;
         }
-
+        return p;
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public void postorden(Oppgave<? super T> oppgave) {
 
-        if ( != null){
-            postorden(verdi, oppgave);
+        if ( rot != null){
+           // postorden(rot, oppgave);
         }
 
         throw new UnsupportedOperationException("Ikke kodet ennå!");
