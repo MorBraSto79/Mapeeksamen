@@ -92,10 +92,10 @@ public class EksamenSBinTre<T> {
         return antall == 0;
     }
 
-    public boolean leggInn(T verdi) {
+    public boolean leggInn(T verdi) {       // Koden er kopiert fra kompendiet (5.2.3 a) og litt modifisert
         Objects.requireNonNull(verdi, "Ulovlig med nullverdier!");
 
-        Node<T> p = rot, forelder = null;
+        Node<T> p = rot, forelder = null;       // gjorde byttet navn på q til forelder
         int cmp = 0;
 
         while (p != null){
