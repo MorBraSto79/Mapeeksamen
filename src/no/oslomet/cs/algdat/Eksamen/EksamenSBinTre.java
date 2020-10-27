@@ -6,12 +6,11 @@ import java.util.*;
 public class EksamenSBinTre<T> {
 
     public static void main(String[] args){
-        EksamenSBinTre<String> tre = new EksamenSBinTre<>(Comparator.naturalOrder());
+        Integer[] a = {4,7,2,9,5,10,8,1,3,6};
+        EksamenSBinTre<Integer> tre = new EksamenSBinTre<>(Comparator. naturalOrder ());
+        for ( int verdi : a) tre.leggInn(verdi);
         System. out .println(tre.antall());
     }
-
-
-
     private static final class Node<T>   // en indre nodeklasse
     {
         private T verdi;                   // nodens verdi
@@ -30,6 +29,11 @@ public class EksamenSBinTre<T> {
         {
             this(verdi, null, null, forelder);
         }
+
+        private Node(T verdi) {
+            this.verdi = verdi;
+        }
+
 
         @Override
         public String toString() {
@@ -89,30 +93,29 @@ public class EksamenSBinTre<T> {
     }
 
     public boolean leggInn(T verdi) {
-
         Objects.requireNonNull(verdi, "Ulovlig med nullverdier!");
 
-        Node<T> p = rot, q = null;               // p starter i roten
-        int cmp = 0;                             // hjelpevariabel
+        Node<T> p = rot, forelder = null;
+        int cmp = 0;
 
-        while (p != null)       // fortsetter til p er ute av treet
-        {
-            q = p;                                 // q er forelder til p
-            cmp = comp.compare(verdi,p.verdi);     // bruker komparatoren
-            p = cmp < 0 ? p.venstre : p.høyre;     // flytter p
+        while (p != null){
+            forelder = p;
+            cmp = comp.compare(verdi, p.verdi);
+            p = cmp < 0 ? p.venstre : p.høyre;
         }
 
-        // p er nå null, dvs. ute av treet, q er den siste vi passerte
+        p = new Node<T>(verdi);
 
-        p = new Node<>(verdi);                   // oppretter en ny node
+        if(forelder == null){
+            rot = p;
+        } else if (cmp < 0){
+            forelder.venstre = p;
+        } else {
+            forelder.høyre = p;
+        }
 
-        if (q == null) rot = p;                  // p blir rotnode
-        else if (cmp < 0) q.venstre = p;         // venstre barn til q
-        else q.høyre = p;                        // høyre barn til q
-
-        antall++;                                // én verdi mer i treet
-        return true;                             // vellykket innlegging
-
+        antall++;
+        return true;
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
@@ -125,6 +128,10 @@ public class EksamenSBinTre<T> {
     }
 
     public int antall(T verdi) {
+
+        int verdiITreet = 0;
+
+
         throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
