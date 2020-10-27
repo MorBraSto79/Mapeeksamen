@@ -172,7 +172,7 @@ public class EksamenSBinTre<T> {
             return p.høyre;
         }
         else {
-            return null;
+            return p;
         }
 
 
@@ -187,10 +187,10 @@ public class EksamenSBinTre<T> {
             nestePostorden(p.høyre);
             return p.høyre;
         } else {
-            return null;
+            return p;
         }
 
-       // throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public void postorden(Oppgave<? super T> oppgave) {
