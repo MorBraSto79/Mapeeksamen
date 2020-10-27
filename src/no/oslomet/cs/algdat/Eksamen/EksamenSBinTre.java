@@ -13,7 +13,7 @@ public class EksamenSBinTre<T> {
         System. out .println(tre.antall(5)); // Utskrift: 0
         System. out .println(tre.antall(4)); // Utskrift: 3
         System. out .println(tre.antall(7)); // Utskrift: 2
-        System. out .println(tre.antall(10));
+        System. out .println(tre.antall(10)); // Utskrift: 1
     }
     private static final class Node<T>   // en indre nodeklasse
     {
@@ -143,13 +143,15 @@ public class EksamenSBinTre<T> {
         while (p != null) {
             int cmp = comp.compare(verdi, p.verdi);
             if (cmp < 0){
+                p = p.venstre;
+            } else if (cmp > 0){
+                p = p.høyre;
+            } else {
                 stk++;
+                p = p.høyre;
             }
-            if (cmp > 0){
-                stk++;
-            }
-
         }
+
         return stk;
 
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
