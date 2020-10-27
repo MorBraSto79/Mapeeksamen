@@ -129,7 +129,14 @@ public class EksamenSBinTre<T> {
 
     public int antall(T verdi) {
 
-        int verdiITreet = 0;
+        if (inneholder(verdi) != true || tom() == true){
+            return 0;
+        }
+
+        int stk = 0;
+
+
+
 
 
         throw new UnsupportedOperationException("Ikke kodet ennå!");
