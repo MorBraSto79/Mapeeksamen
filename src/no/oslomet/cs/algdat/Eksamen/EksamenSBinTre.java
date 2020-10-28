@@ -228,55 +228,41 @@ public class EksamenSBinTre<T> {
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
 
-
-
-
-        if (p.venstre != null){
+        if (p.venstre != null) {
             førstePostorden(p.venstre);
-            return (p.venstre);
-        } else if (p.høyre != null){
-            førstePostorden(p.høyre);
-            return (p.høyre);
-        } else {
-            return p;
+            return p.venstre;
         }
-
-
+        if (p.høyre != null) {
+            førstePostorden(p.høyre);
+            return p.høyre;
+        }
+        return null;
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
 
-        // p er rot. første postorden blir minste bladet til venstre for rot.
-        // neste postorden blir første postordens søsken, hvis ingen søsken, er neste postorden den førstes forelder
-        if(p.venstre != null){
-            return p.venstre;
+        if (p.venstre != null) {
+            førstePostorden(p.venstre);
+            return p.venstre.forelder.høyre;
         } else if (p.høyre != null){
-            return p.høyre;
+            førstePostorden(p.høyre);
+            return p.forelder;
         } else {
             Node<T> current = p.forelder;
-
-            while (current != null && current.høyre == p) {
-                p = p.forelder;
+            while (current != null && current.høyre == p){
                 current = current.forelder;
-                return p;
+                p = p.forelder;
             }
             if (current != null){
                 return current.høyre;
             } else {
-                return null;//if (p.ven)
+                return null;
             }
         }
-        // throw new UnsupportedOperationException("Ikke kodet ennå!");
-    }
 
-    public void postorden(Oppgave<? super T> oppgave) {
 
-       /* if ( rot != null){
-            postorden(oppgave);
-        }
-
-        */throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public void postordenRecursive(Oppgave<? super T> oppgave) {
