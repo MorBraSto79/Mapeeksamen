@@ -229,10 +229,10 @@ public class EksamenSBinTre<T> {
     private static <T> Node<T> førstePostorden(Node<T> p) {
 
         if (p.venstre != null){
-            førstePostorden(p.venstre);
+           // førstePostorden(p.venstre);
             return p.venstre;
         } else if (p.høyre != null){
-            førstePostorden(p.høyre);
+           // førstePostorden(p.høyre);
             return p.høyre;
         } else {
             return p;
@@ -244,25 +244,33 @@ public class EksamenSBinTre<T> {
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
 
-        if (p.venstre != null){
-            p = p.høyre;
-            while (p.venstre != null){
-                p = p.venstre;
+        Node<T> current = p.forelder;
+        while (p.venstre != null){
+            p = p.venstre;
+            current = p.forelder;
+        }
+        if(current.høyre != null){
+            p = current.høyre;
+            if(p.venstre == null && p.høyre == null){
+                return p;
+            } else if (p.venstre != null){
+                return p.venstre;
+            } else {
+                return p.høyre;
             }
-        } else {
-            return p;
         }
         return p;
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+     //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public void postorden(Oppgave<? super T> oppgave) {
 
-        if ( rot != null){
-           // postorden(rot, oppgave);
+       /* if ( rot != null){
+            postorden(oppgave);
         }
 
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        */throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public void postordenRecursive(Oppgave<? super T> oppgave) {
