@@ -228,12 +228,15 @@ public class EksamenSBinTre<T> {
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
 
+
+
+
         if (p.venstre != null){
-           // førstePostorden(p.venstre);
-            return p.venstre;
+            førstePostorden(p.venstre);
+            return (p.venstre);
         } else if (p.høyre != null){
-           // førstePostorden(p.høyre);
-            return p.høyre;
+            førstePostorden(p.høyre);
+            return (p.høyre);
         } else {
             return p;
         }
@@ -244,24 +247,27 @@ public class EksamenSBinTre<T> {
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
 
-        Node<T> current = p.forelder;
-        while (p.venstre != null){
-            p = p.venstre;
-            current = p.forelder;
-        }
-        if(current.høyre != null){
-            p = current.høyre;
-            if(p.venstre == null && p.høyre == null){
+        // p er rot. første postorden blir minste bladet til venstre for rot.
+        // neste postorden blir første postordens søsken, hvis ingen søsken, er neste postorden den førstes forelder
+        if(p.venstre != null){
+            return p.venstre;
+        } else if (p.høyre != null){
+            return p.høyre;
+        } else {
+            Node<T> current = p.forelder;
+
+            while (current != null && current.høyre == p) {
+                p = p.forelder;
+                current = current.forelder;
                 return p;
-            } else if (p.venstre != null){
-                return p.venstre;
+            }
+            if (current != null){
+                return current.høyre;
             } else {
-                return p.høyre;
+                return null;//if (p.ven)
             }
         }
-        return p;
-
-     //throw new UnsupportedOperationException("Ikke kodet ennå!");
+        // throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public void postorden(Oppgave<? super T> oppgave) {
