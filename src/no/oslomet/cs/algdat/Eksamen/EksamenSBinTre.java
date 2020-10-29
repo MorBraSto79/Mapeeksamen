@@ -10,10 +10,8 @@ public class EksamenSBinTre<T> {
         EksamenSBinTre<Integer> tre = new EksamenSBinTre<>(Comparator. naturalOrder ());
         for ( int verdi : a) tre.leggInn(verdi);
         System. out .println(tre.antall()); // Utskrift: 10
-        System. out .println(tre.antall(5)); // Utskrift: 0
-        System. out .println(tre.antall(4)); // Utskrift: 3
-        System. out .println(tre.antall(7)); // Utskrift: 2
-        System. out .println(tre.antall(10)); // Utskrift: 1
+
+
     }
     private static final class Node<T>   // en indre nodeklasse
     {
@@ -236,12 +234,13 @@ public class EksamenSBinTre<T> {
             førstePostorden(p.høyre);
             return p.høyre;
         }
-        return null;
+        return p;
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
 
+        p = førstePostorden(p);
         if (p.venstre != null) {
             førstePostorden(p.venstre);
             return p.venstre.forelder.høyre;
@@ -261,8 +260,15 @@ public class EksamenSBinTre<T> {
             }
         }
 
-
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
+    }
+
+    public void postorden(Oppgave <? super T> oppgave){
+
+
+
+
+        throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public void postordenRecursive(Oppgave<? super T> oppgave) {

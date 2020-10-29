@@ -178,7 +178,7 @@ public class EksamenTest {
 
         //Test at postorden fungerer
         postorden.set("");
-        //tre.postorden(oppgave);
+        tre.postorden(oppgave);
         assertEquals(postorden.get(), " 2 4 5 3 1 7 9 8 6 11 13 12 14 10");
 
         //Test at rekursiv postorden fungerer
