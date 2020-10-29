@@ -127,15 +127,16 @@ public class EksamenSBinTre<T> {
             return false;
         }
 
-        Node<T> p = rot, forelder = null;
+        Node<T> p = rot;
+        //forelder = null;
 
         while (p != null){
             int cmp = comp.compare(verdi,p.verdi);
             if (cmp < 0){
-                forelder = p;
+                //forelder = p;
                 p = p.venstre;
             } else if (cmp > 0){
-                forelder = p;
+                //forelder = p;
                 p = p.høyre;
             } else {
                 break;
@@ -146,27 +147,44 @@ public class EksamenSBinTre<T> {
             }
 
             if (p.venstre == null || p.høyre == null){
-                Node<T> barn = p.venstre != null ? p.venstre : p.høyre;
+                Node<T> barn = (p.venstre != null) ? p.venstre : p.høyre;
                 if (p == rot){
                     rot = barn;
-                } else if (p == forelder.venstre){
-                    forelder.venstre = barn;
+                    if (barn != null){
+                        barn.forelder = null;
+                    }
+                } else if (p == p.forelder.venstre){
+                    if(barn != null){
+                        barn.forelder = p.forelder;
+                    }
+                    p.forelder.venstre = barn;
                 } else {
-                    forelder.høyre = barn;
+                    if (barn != null){
+                        barn.forelder = p.forelder;
+                    }
+                    p.forelder.høyre = barn;
                 }
             } else {
-                Node<T> s = p, r = p.høyre;
+                Node<T> r = p.høyre;
                 while (r.venstre != null){
-                    s = r;
                     r = r.venstre;
                 }
                 p.verdi = r.verdi;
-                if (s != p){
-                    s.venstre = r.høyre;
+                if(r.forelder != p){
+                    Node <T> q = r.forelder;
+                    q.venstre = r.høyre;
+                    if(q.venstre != null){
+                        q.venstre.forelder = q;
+                    }
                 } else {
-                    s.høyre = r.høyre;
+                    p.høyre = r.høyre;
+                    if (p.høyre != null){
+                        p.høyre.forelder = p;
+                    }
                 }
             }
+
+
         }
         antall--;
         return true;
@@ -176,22 +194,22 @@ public class EksamenSBinTre<T> {
 
     public int fjernAlle(T verdi) {
 
-       /* if (tom()){
+        if (tom()){
             return 0;
         }
 
         int fjernet = 0;
-        boolean removed = false;
-        while (removed != true){
+        boolean removed = true;
+        while (removed != false){
             if(fjern(verdi)){
                 fjernet++;
             } else {
-                removed = true;
+                removed = false;
             }
         }
         return fjernet;
 
-        */throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public int antall(T verdi) {
@@ -221,7 +239,10 @@ public class EksamenSBinTre<T> {
     }
 
     public void nullstill() {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        rot = null;
+        antall = 0;
+
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
@@ -240,25 +261,27 @@ public class EksamenSBinTre<T> {
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
 
-        p = førstePostorden(p);
-        if (p.venstre != null) {
-            førstePostorden(p.venstre);
-            return p.venstre.forelder.høyre;
-        } else if (p.høyre != null){
-            førstePostorden(p.høyre);
-            return p.forelder;
-        } else {
-            Node<T> current = p.forelder;
-            while (current != null && current.høyre == p){
-                current = current.forelder;
-                p = p.forelder;
-            }
-            if (current != null){
-                return current.høyre;
-            } else {
-                return null;
-            }
+        // Rot har ingen neste i postOrden
+
+        Node <T> n = førstePostorden(p);
+        if (n == p)
+            return null;
+
+        // If given node is right child of its  Hvis noden er foreldrens høyre barn, eller forlder ikke har høyre barn
+        // så er forelder neste i postorden
+
+        Node <T> m = n.forelder;
+        if (m.høyre == null || m.høyre == n) {
+            return m;
         }
+
+        // I alle andre tilfeller leter vi etter venstrebarn i forelders høyre subtre
+
+        Node <T> current = m.høyre;
+        while (current.venstre != null)
+            current = current.venstre;
+
+        return current;
 
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
