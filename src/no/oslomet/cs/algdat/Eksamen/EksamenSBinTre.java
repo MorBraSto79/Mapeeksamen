@@ -9,8 +9,6 @@ public class EksamenSBinTre<T> {
         Integer[] a = {4,7,2,9,4,10,8,7,4,6};
         EksamenSBinTre<Integer> tre = new EksamenSBinTre<>(Comparator. naturalOrder ());
         for ( int verdi : a) tre.leggInn(verdi);
-        System. out .println(tre.antall()); // Utskrift: 10
-
 
     }
     private static final class Node<T>   // en indre nodeklasse
@@ -106,7 +104,7 @@ public class EksamenSBinTre<T> {
             p = cmp < 0 ? p.venstre : p.høyre;
         }
 
-        p = new Node<T>(verdi);
+        p = new Node<T>(verdi, forelder);
 
         if(forelder == null){
             rot = p;
@@ -209,7 +207,6 @@ public class EksamenSBinTre<T> {
         }
         return fjernet;
 
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public int antall(T verdi) {
@@ -235,7 +232,6 @@ public class EksamenSBinTre<T> {
 
         return stk;
 
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public void nullstill() {
@@ -246,28 +242,48 @@ public class EksamenSBinTre<T> {
     }
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
-
-        if (p.venstre != null) {
-            førstePostorden(p.venstre);
-            return p.venstre;
+        while (true) {
+            if (p.venstre != null) {
+                p = p.venstre;
+            } else if (p.høyre != null) {
+                p = p.høyre;
+            } else {
+                return p;
+            }
         }
-        if (p.høyre != null) {
-            førstePostorden(p.høyre);
-            return p.høyre;
-        }
-        return p;
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
 
-        // Rot har ingen neste i postOrden
+        Node<T> peker, forelder;
+        peker = null;
+        forelder = null;
+
+        peker = p;
+        forelder = peker.forelder;
+
+        if (forelder == null) {
+            return null;
+        }
+
+        if (peker == forelder.høyre) {
+            return forelder;
+        }
+
+        if (peker == forelder.venstre) {
+            if (forelder.høyre == null) {
+                return forelder;
+            }
+            return førstePostorden(forelder.høyre);
+        }
+        return null;
+        /*/ Roten har ingen neste i postOrden
 
         Node <T> n = førstePostorden(p);
         if (n == p)
             return null;
 
-        // If given node is right child of its  Hvis noden er foreldrens høyre barn, eller forlder ikke har høyre barn
+        // Hvis noden er foreldrens høyre barn, eller forlder ikke har høyre barn
         // så er forelder neste i postorden
 
         Node <T> m = n.forelder;
@@ -281,17 +297,22 @@ public class EksamenSBinTre<T> {
         while (current.venstre != null)
             current = current.venstre;
 
-        return current;
+        return current;*/
 
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public void postorden(Oppgave <? super T> oppgave){
 
+        Node<T> p = rot;
+         while(p != null){
+            p = nestePostorden(p);
+            while (true){
+                oppgave.utførOppgave(p.verdi);
+            }
+        }
 
-
-
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public void postordenRecursive(Oppgave<? super T> oppgave) {
@@ -299,7 +320,15 @@ public class EksamenSBinTre<T> {
     }
 
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+        p = rot;
+        if (p != null)  // metoden returnerer hvis p == null
+        {
+            postordenRecursive(p.venstre,oppgave);
+            postordenRecursive(p.høyre,oppgave);
+            oppgave.utførOppgave(p.verdi);
+        }
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public ArrayList<T> serialize() {
