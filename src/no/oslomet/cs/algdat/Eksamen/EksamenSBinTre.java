@@ -5,12 +5,7 @@ import java.util.*;
 
 public class EksamenSBinTre<T> {
 
-    public static void main(String[] args){
-        Integer[] a = {4,7,2,9,4,10,8,7,4,6};
-        EksamenSBinTre<Integer> tre = new EksamenSBinTre<>(Comparator. naturalOrder ());
-        for ( int verdi : a) tre.leggInn(verdi);
 
-    }
     private static final class Node<T>   // en indre nodeklasse
     {
         private T verdi;                   // nodens verdi
@@ -29,11 +24,6 @@ public class EksamenSBinTre<T> {
         {
             this(verdi, null, null, forelder);
         }
-
-        private Node(T verdi) {
-            this.verdi = verdi;
-        }
-
 
         @Override
         public String toString() {
@@ -116,7 +106,7 @@ public class EksamenSBinTre<T> {
 
         antall++;
         return true;
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+
     }
 
     public boolean fjern(T verdi) {     // importert fra kompendiet (5.2.8 d) og tilpasset denne oppgaven
@@ -172,7 +162,7 @@ public class EksamenSBinTre<T> {
 
         antall--;
         return true;
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+
     }
 
     public int fjernAlle(T verdi) {
@@ -226,7 +216,7 @@ public class EksamenSBinTre<T> {
         rot = null;
         antall = 0;
 
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+
     }
 
     private void nullstill(Node<T> p){
@@ -257,8 +247,6 @@ public class EksamenSBinTre<T> {
     private static <T> Node<T> nestePostorden(Node<T> p) {
 
         Node<T> peker, forelder;
-        peker = null;
-        forelder = null;
 
         peker = p;
         forelder = peker.forelder;
@@ -278,29 +266,7 @@ public class EksamenSBinTre<T> {
             return førstePostorden(forelder.høyre);
         }
         return null;
-        /*/ Roten har ingen neste i postOrden
 
-        Node <T> n = førstePostorden(p);
-        if (n == p)
-            return null;
-
-        // Hvis noden er foreldrens høyre barn, eller forlder ikke har høyre barn
-        // så er forelder neste i postorden
-
-        Node <T> m = n.forelder;
-        if (m.høyre == null || m.høyre == n) {
-            return m;
-        }
-
-        // I alle andre tilfeller leter vi etter venstrebarn i forelders høyre subtre
-
-        Node <T> current = m.høyre;
-        while (current.venstre != null)
-            current = current.venstre;
-
-        return current;*/
-
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public void postorden(Oppgave <? super T> oppgave){
