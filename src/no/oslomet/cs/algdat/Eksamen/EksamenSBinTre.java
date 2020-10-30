@@ -220,45 +220,27 @@ public class EksamenSBinTre<T> {
     }
 
     public void nullstill() {
-        Node<T> p = rot;
-
-        if (p == null){
-            antall = 0;
+        if (!tom()){
+            nullstill(rot);
         }
-
-        if (p.venstre != null){
-            p.venstre = null;
-
-        }
-        if (p.høyre != null){
-            p.høyre = null;
-
-        }
-        p.verdi = null;
-        antall = antall();
-
-
+        rot = null;
+        antall = 0;
 
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
-    /*private void nullstill(Node<T> p){
+    private void nullstill(Node<T> p){
         if (p.venstre != null){
             nullstill(p.venstre);
-        }
-        if (p.høyre != null){
-            nullstill(p.høyre);
-        }
-
-        if (p.venstre != null){
             p.venstre = null;
         }
         if (p.høyre != null){
+            nullstill(p.høyre);
             p.høyre = null;
         }
         p.verdi = null;
 
-    }*/
+    }
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
         while (true) {
@@ -348,7 +330,20 @@ public class EksamenSBinTre<T> {
     }
 
     public ArrayList<T> serialize() {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+        ArrayList<T> array = new ArrayList<T>();
+        Deque <Node<T>> stack = new LinkedList<Node<T>>();
+
+        stack.add(rot);
+        while (stack.isEmpty()) {
+            Node<T> p = stack.pop();
+            if (p.venstre != null) stack.add(p.venstre);
+            if (p.høyre != null) stack.add(p.høyre);
+        }
+
+        return array;
+
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     static <K> EksamenSBinTre<K> deserialize(ArrayList<K> data, Comparator<? super K> c) {
