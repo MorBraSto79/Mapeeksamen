@@ -121,74 +121,58 @@ public class EksamenSBinTre<T> {
 
     public boolean fjern(T verdi) {     // importert fra kompendiet (5.2.8 d) og tilpasset denne oppgaven
 
-
-        /*if (verdi == null){
-            return false;
-        }
+        if(verdi == null) return false;
 
         Node<T> p = rot;
-        //forelder = null;
 
-        while (p != null){
+        while(p!=null){
             int cmp = comp.compare(verdi,p.verdi);
-            if (cmp < 0){
-                //forelder = p;
-                p = p.venstre;
-            } else if (cmp > 0){
-                //forelder = p;
-                p = p.høyre;
-            } else {
-                break;
-            }
 
-            if (p == null){
-                return false;
-            }
-
-            if (p.venstre == null || p.høyre == null){
-                Node<T> barn = (p.venstre != null) ? p.venstre : p.høyre;
-                if (p == rot){
-                    rot = barn;
-                    if (barn != null){
-                        barn.forelder = null;
-                    }
-                } else if (p == p.forelder.venstre){
-                    if(barn != null){
-                        barn.forelder = p.forelder;
-                    }
-                    p.forelder.venstre = barn;
-                } else {
-                    if (barn != null){
-                        barn.forelder = p.forelder;
-                    }
-                    p.forelder.høyre = barn;
-                }
-            } else {
-                Node<T> r = p.høyre;
-                while (r.venstre != null){
-                    r = r.venstre;
-                }
-                p.verdi = r.verdi;
-                if(r.forelder != p){
-                    Node <T> q = r.forelder;
-                    q.venstre = r.høyre;
-                    if(q.venstre != null){
-                        q.venstre.forelder = q;
-                    }
-                } else {
-                    p.høyre = r.høyre;
-                    if (p.høyre != null){
-                        p.høyre.forelder = p;
-                    }
-                }
-            }
-
-
+            if(cmp < 0) p=p.venstre;
+            else if(cmp > 0) p=p.høyre;
+            else break;
         }
+
+        if (p==null) return false;
+
+        if (p.venstre==null || p.høyre==null) {
+
+            Node<T> b = (p.venstre!=null) ? p.venstre : p.høyre;
+
+            if (p == rot) {
+                rot =  b;
+                if(b!=null) b.forelder=null;
+            }
+            else if (p==p.forelder.venstre) {
+                if(b!=null)b.forelder = p.forelder;
+                p.forelder.venstre = b;
+            } else {
+
+                if(b!=null)b.forelder = p.forelder;
+                p.forelder.høyre = b;
+            }
+        }
+        else {
+
+            Node<T> r = p.høyre;
+            while (r.venstre != null) r = r.venstre;
+            p.verdi = r.verdi;
+
+            if(r.forelder!=p) {
+                Node<T> q = r.forelder;
+                q.venstre = r.høyre;
+                if(q.venstre!=null)q.venstre.forelder = q;
+            }
+            else{
+                p.høyre =  r.høyre;
+                if(p.høyre !=null) p.høyre.forelder = p;
+
+            }
+        }
+
         antall--;
         return true;
-        */
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public int fjernAlle(T verdi) {
@@ -236,13 +220,29 @@ public class EksamenSBinTre<T> {
     }
 
     public void nullstill() {
-        rot = null;
-        antall = 0;
+        Node<T> p = rot;
+
+        if (p == null){
+            antall = 0;
+        }
+
+        if (p.venstre != null){
+            p.venstre = null;
+
+        }
+        if (p.høyre != null){
+            p.høyre = null;
+
+        }
+        p.verdi = null;
+        antall = antall();
+
+
 
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
-    private void nullstill(Node<T> p){
+    /*private void nullstill(Node<T> p){
         if (p.venstre != null){
             nullstill(p.venstre);
         }
@@ -258,7 +258,7 @@ public class EksamenSBinTre<T> {
         }
         p.verdi = null;
 
-    }
+    }*/
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
         while (true) {
