@@ -332,18 +332,17 @@ public class EksamenSBinTre<T> {
     public ArrayList<T> serialize() {
 
         ArrayList<T> array = new ArrayList<T>();
-        Deque <Node<T>> stack = new LinkedList<Node<T>>();
+        Deque<Node<T>> stack = new LinkedList<Node<T>>();
 
         stack.add(rot);
-        while (stack.isEmpty()) {
+        while (!stack.isEmpty()) {
             Node<T> p = stack.pop();
+            array.add(p.verdi);
             if (p.venstre != null) stack.add(p.venstre);
             if (p.høyre != null) stack.add(p.høyre);
         }
 
         return array;
-
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     static <K> EksamenSBinTre<K> deserialize(ArrayList<K> data, Comparator<? super K> c) {
