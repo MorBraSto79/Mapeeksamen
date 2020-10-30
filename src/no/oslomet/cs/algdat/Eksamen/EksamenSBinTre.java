@@ -121,7 +121,8 @@ public class EksamenSBinTre<T> {
 
     public boolean fjern(T verdi) {     // importert fra kompendiet (5.2.8 d) og tilpasset denne oppgaven
 
-        if (verdi == null){
+
+        /*if (verdi == null){
             return false;
         }
 
@@ -186,8 +187,8 @@ public class EksamenSBinTre<T> {
         }
         antall--;
         return true;
-
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+        */
+        throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public int fjernAlle(T verdi) {
@@ -239,6 +240,24 @@ public class EksamenSBinTre<T> {
         antall = 0;
 
         //throw new UnsupportedOperationException("Ikke kodet ennå!");
+    }
+
+    private void nullstill(Node<T> p){
+        if (p.venstre != null){
+            nullstill(p.venstre);
+        }
+        if (p.høyre != null){
+            nullstill(p.høyre);
+        }
+
+        if (p.venstre != null){
+            p.venstre = null;
+        }
+        if (p.høyre != null){
+            p.høyre = null;
+        }
+        p.verdi = null;
+
     }
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
@@ -304,15 +323,13 @@ public class EksamenSBinTre<T> {
 
     public void postorden(Oppgave <? super T> oppgave){
 
-        Node<T> p = rot;
+        Node<T> p = førstePostorden(rot);
          while(p != null){
-            p = nestePostorden(p);
-            while (true){
-                oppgave.utførOppgave(p.verdi);
-            }
+             oppgave.utførOppgave(p.verdi);
+             p = nestePostorden(p);
+
         }
 
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
     public void postordenRecursive(Oppgave<? super T> oppgave) {
@@ -321,14 +338,13 @@ public class EksamenSBinTre<T> {
 
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
 
-        p = rot;
         if (p != null)  // metoden returnerer hvis p == null
         {
             postordenRecursive(p.venstre,oppgave);
             postordenRecursive(p.høyre,oppgave);
             oppgave.utførOppgave(p.verdi);
         }
-        //throw new UnsupportedOperationException("Ikke kodet ennå!");
+
     }
 
     public ArrayList<T> serialize() {
