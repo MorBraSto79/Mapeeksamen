@@ -346,7 +346,10 @@ public class EksamenSBinTre<T> {
     }
 
     static <K> EksamenSBinTre<K> deserialize(ArrayList<K> data, Comparator<? super K> c) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+        EksamenSBinTre<Integer> tre = new EksamenSBinTre<>(Comparator. naturalOrder ());
+        for ( int verdi : a) tre.leggInn(verdi);
+
     }
 
 
